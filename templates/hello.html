@@ -6,14 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello World!</h1>
+    <h1>Hello in Japan</h1>
     <ul>
-        <li>箇条書き1</li>
-        <li>箇条書き2</li>
-        <li>箇条書き3</li>
-        <li>箇条書き4</li>
-        <li>箇条書き5</li>
-        <li>箇条書き6</li>
+        {% for bullet in bullets%}
+            {% if loop.index % 3 == 0 %}
+                <li>{{ bullet }}は3の倍数です</li>
+            {% else %}
+                <li>{{ bullet }}</li>
+            {% endif %}
+
+        {% endfor %}
     </ul>
 </body>
 </html>
