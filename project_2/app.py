@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import pytz
@@ -19,13 +19,26 @@ class Post(db.Model):
     body = db.Column(db.String(300), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(pytz.timezone("Asia/Tokyo")))
 
-@app.route("/")
+@app.route("/",methods=["GET","POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "GET":
+        posts = Post.query.all()
+        return render_template("index.html",posts=posts)
 
-@app.route("/create")
+@app.route("/create",methods=["GET","POST"])
 def create():
-    return render_template("create.html")
+    if request.method == "POST":
+        title = request.form.get("title")
+        body = request.form.get("body")
+
+        post = Post(title=title,body=body)
+
+        db.session.add(post)
+        db.session.commit()
+        return redirect("/")
+
+    else:
+        return render_template("create.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
