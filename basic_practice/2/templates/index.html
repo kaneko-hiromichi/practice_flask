@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Data Submission</title>
+</head>
+<body>
+    <h1>データベース</h1>
+    <form method="POST">
+        <input type="text" name="content" placeholder="入力欄">
+        <input type="submit" value="送信">
+    </form>
+    <h2>データベースの中身</h2>
+    <ul>
+        {% for item in data %}
+            <li>{{ item.id }}.{{ item.content }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
